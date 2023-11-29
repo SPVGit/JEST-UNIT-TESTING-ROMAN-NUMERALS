@@ -27,7 +27,7 @@ function romanUniques(n) {
 }
 function romanNumerals(n) {
 
-    if (n >= 1 || n <= 3999) {
+    if (n >= 1 && n <= 3999) {
         let digitsArr = []
 
         let strNum = n.toString()
