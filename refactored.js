@@ -10,7 +10,7 @@ function generateRomanNumerals(n) { //e.g. 258
 
     if (n >= 1 && n <= 3999) {
         
-        return calcRomanNumerals(digitize(n))
+        return digitize(n)
     }
     else {
         return ""
@@ -27,29 +27,13 @@ function digitize(n){
 
         for (let i =numLength - 1; i>=0; i--) {
 
-            digitsArr.push(Number(strArr[i]) * (10 ** i))  //[200,50,8]
-            
+            digitsArr.push(joinNumerals( Number(strArr[i]), (10 ** i)) )  //[200,50,8]
+
         }
-        return digitsArr
+        return digitsArr.join('')
 
 }
 
-function calcRomanNumerals(arr) {
-
-    let str = ""
-
-    arr.forEach((num) => {  // [200,50,8]  
-
-        for(let i=arr.length+1 ; i>=1; i--){  // 4,3,2,1
-            let order = 10**(i-1) // 10 **(3-1) = 100
-            let times = num / order  //e.g. ... 200 ->  times = 2 ... order = 100
-            str+=joinNumerals(times, order)  
-        }
-    })
-
-    return str
-
-}
 
 function joinNumerals(times, order) {
 
