@@ -1,26 +1,36 @@
 
-//Refactoring in progress
+//Refactoring in progress 
 
-function romanNumerals(n) {
+//Use better / clearer names 
+//abstract away from main function
+//Fewer lines of code
+//Fewer loops if possible!!!
+
+function generateRomanNumerals(n) { //e.g. 258
 
     if (n >= 1 && n <= 3999) {
-        let digitsArr = []
-        let strNum = n.toString()
-        let strArr = strNum.split("").reverse()
-        let numLength = strNum.length
-
-        for (let i = numLength - 1; i >= 0; i--) {
-
-            digitsArr.push(Number(strArr[i]) * (10 ** i)) 
-
-        }
-
-        return calcRomanNumerals(digitsArr)
+        
+        return calcRomanNumerals(digitize(n))
     }
     else {
         return ""
     }
 
+}
+
+function digitize(n){
+
+    let digitsArr = []
+        let strNum = n.toString() // '258'
+        let strArr = strNum.split("").reverse() // ['8','5','2']
+        let numLength = strNum.length
+
+        for (let i =numLength - 1; i>=0; i--) {
+
+            digitsArr.push(Number(strArr[i]) * (10 ** i))  //[200,50,8]
+            
+        }
+        return digitsArr
 
 }
 
@@ -28,11 +38,12 @@ function calcRomanNumerals(arr) {
 
     let str = ""
 
-    arr.forEach((num) => {
+    arr.forEach((num) => {  // [200,50,8]  
 
-        for(let i=4;i>=1;i--){
-            let times = num /10**(i-1)
-            str+=repeatRomanNumerals(times, 10**(i-1))
+        for(let i=arr.length+1 ; i>=1; i--){  // 4,3,2,1
+            let order = 10**(i-1) // 10 **(3-1) = 100
+            let times = num / order  //e.g. ... 200 ->  times = 2 ... order = 100
+            str+=joinNumerals(times, order)  
         }
     })
 
@@ -40,8 +51,7 @@ function calcRomanNumerals(arr) {
 
 }
 
-
-function repeatRomanNumerals(times, order) {
+function joinNumerals(times, order) {
 
     let sum = ""
     let romanUniques = {1:'I', 5:'V', 10: 'X', 50: 'L', 100: 'C', 500: 'D', 1000:'M'}
@@ -64,4 +74,4 @@ function repeatRomanNumerals(times, order) {
 
 }
 
-module.exports = { romanNumerals }
+module.exports = { generateRomanNumerals }
